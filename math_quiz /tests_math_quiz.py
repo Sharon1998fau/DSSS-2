@@ -1,30 +1,39 @@
 import unittest
-from math_quiz import function_A, function_B, function_C
+from math_quiz import random_int_in_range, random_operator, create_problem
 
+class MathQuizTestCases(unittest.TestCase):
+    """
+    Test suite for the math quiz functions.
+    """
 
-class TestMathGame(unittest.TestCase):
+    def test_random_integer_within_range(self):
+        # Test if generated integers fall within the specified range
+        result = random_int_in_range(1, 10)
+        self.assertGreaterEqual(result, 1, "Result should be greater than or equal to 1")
+        self.assertLessEqual(result, 10, "Result should be less than or equal to 10")
 
-    def test_function_A(self):
-        # Test if random numbers generated are within the specified range
-        min_val = 1
-        max_val = 10
-        for _ in range(1000):  # Test a large number of random values
-            rand_num = function_A(min_val, max_val)
-            self.assertTrue(min_val <= rand_num <= max_val)
+        result = random_int_in_range(5, 15)
+        self.assertGreaterEqual(result, 5, "Result should be greater than or equal to 5")
+        self.assertLessEqual(result, 15, "Result should be less than or equal to 15")
 
-    def test_function_B(self):
-        # TODO
-        pass
+    def test_random_operator_selection(self):
+        # Check if the returned operator is one of the expected values
+        operator = random_operator()
+        self.assertIn(operator, ['+', '-', '*'], "Operator should be one of '+', '-', '*'")
 
-    def test_function_C(self):
-            test_cases = [
-                (5, 2, '+', '5 + 2', 7),
-                ''' TODO add more test cases here '''
-            ]
+    def test_create_problem_output(self):
+        # Test the output format and correctness of the answer for each operator
+        problem_str, solution = create_problem(5, 3, '+')
+        self.assertEqual(problem_str, "5 + 3", "Problem string should match '5 + 3'")
+        self.assertEqual(solution, 8, "Solution should be 8")
 
-            for num1, num2, operator, expected_problem, expected_answer in test_cases:
-                # TODO
-                pass
+        problem_str, solution = create_problem(5, 3, '-')
+        self.assertEqual(problem_str, "5 - 3", "Problem string should match '5 - 3'")
+        self.assertEqual(solution, 2, "Solution should be 2")
 
-if __name__ == "__main__":
+        problem_str, solution = create_problem(5, 3, '*')
+        self.assertEqual(problem_str, "5 * 3", "Problem string should match '5 * 3'")
+        self.assertEqual(solution, 15, "Solution should be 15")
+
+if __name__ == '__main__':
     unittest.main()
